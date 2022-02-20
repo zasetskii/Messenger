@@ -10,5 +10,7 @@
     </qresource>
     <qresource prefix="/images">
         <file>icon_plus.png</file>
+        <file>copy.png</file>
+        <file>delete.png</file>
     </qresource>
 </RCC>

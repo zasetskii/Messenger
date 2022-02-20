@@ -61,6 +61,7 @@ int VariantMapTableModel::rowById(const int id) const
     for(int i = 0; i < m_id_by_row.count(); ++i)
         if (m_id_by_row.at(i) == id)
             return i;
+    return -1;
 }
 
 int VariantMapTableModel::columnCount(const QModelIndex &parent) const

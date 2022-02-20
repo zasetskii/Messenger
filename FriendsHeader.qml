@@ -28,8 +28,6 @@ Rectangle
         Label
         {
             Layout.alignment: Qt.AlignCenter
-            //Layout.fillWidth: true
-            //anchors.centerIn: parent
             text: "Друзья"
             color: "white"
             font.pixelSize: root.height * 0.35
@@ -58,7 +56,7 @@ Rectangle
                 MenuItem
                 {
                     text: "О приложении"
-                    //onTriggered: settingsDialog.open()
+                    onTriggered: aboutPopup.open()
                 }
             }
         }
@@ -76,6 +74,27 @@ Rectangle
         {
             console.log("Chosen file: ", fileDialog.fileUrl)
             avatarSelected(fileDialog.fileUrl)
+        }
+    }
+
+    Popup
+    {
+        id: aboutPopup
+        parent: Overlay.overlay
+        anchors.centerIn: parent
+        width: 0.8 * root.width
+        modal: true
+        contentItem:
+        Label
+        {
+            anchors.fill: parent
+            anchors.margins: 15
+            wrapMode: Text.WordWrap
+            textFormat: Text.StyledText
+            text: "Данное приложение - подобие клиента мессенджера, работающее в связке с приложением-сервером.
+Подключение осуществляется по локальной сети, все данные подгружаются с сервера.<br>Выбор пользователя или создание
+нового осуществляется в левом меню-шторке.<br>Кнопка на экране с друзьями позволяет добавить пользователя в друзья."
+            font.pointSize: 10
         }
     }
 

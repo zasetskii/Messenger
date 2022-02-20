@@ -57,6 +57,7 @@ Label
                 MenuItem
                 {
                     text: "Копировать"
+                    icon.source: "qrc:/images/copy.png"
                     onTriggered:
                     {
                         textEdit.text = root.text
@@ -67,6 +68,7 @@ Label
                 MenuItem
                 {
                     text: "Удалить"
+                    icon.source: "qrc:/images/delete.png"
                     onTriggered: removeMessage()
                 }
                 onClosed: bgRect.color = "white"

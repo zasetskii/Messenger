@@ -264,6 +264,12 @@ void TCPClient::sendNewFriend(const QString &username, const QString &new_friend
     sendStringList({QString("FRIENDS APPEND"), username, new_friend});
 }
 
+void TCPClient::setCurUser(const QString &username)
+{
+    m_cur_user = username;
+    emit curUserChanged();
+}
+
 
 VariantMapTableModel* TCPClient::getMessageModel() const
 {

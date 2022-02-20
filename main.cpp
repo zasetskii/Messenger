@@ -13,8 +13,9 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
-    QGuiApplication::setApplicationName("Messenger");
-    QGuiApplication::setOrganizationName("QtProject");
+    app.setApplicationName("Messenger");
+    app.setOrganizationName("QtProject");
+    app.setOrganizationDomain("somecompany.com");
 
     qmlRegisterType<ImageItem>("myextension", 1, 0, "ImageItem");
 

@@ -16,7 +16,7 @@ class TCPClient : public QObject
     Q_PROPERTY(VariantMapTableModel* messageModel READ getMessageModel NOTIFY messageModelChanged)
     Q_PROPERTY(QStringListModel* usersModel READ getUsersModel NOTIFY usersModelChanged)
     Q_PROPERTY(QStringListModel* friendsModel READ getFriendsModel NOTIFY friendsModelChanged)
-    Q_PROPERTY(QString curUser READ getCurUser NOTIFY curUserChanged)
+    Q_PROPERTY(QString curUser READ getCurUser WRITE setCurUser NOTIFY curUserChanged)
     Q_PROPERTY(QImage avatar READ getAvatar NOTIFY avatarChanged)
     Q_PROPERTY(QImage friendAvatar READ getFriendAvatar NOTIFY friendAvatarChanged)
 
@@ -69,6 +69,8 @@ private:
     void sendUsersRequest() const;
     void sendNewUser(const QString& username) const;
     void sendNewFriend(const QString& username, const QString& new_friend) const;
+
+    void setCurUser(const QString& username);
 
 
 private:

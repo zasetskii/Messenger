@@ -1,6 +1,7 @@
 import QtQuick 2.13
 import QtQuick.Controls 2.5
 import QtQml 2.3
+import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.13
 import myextension 1.0
 
@@ -17,61 +18,66 @@ Rectangle
 
     signal closeMessenger()
 
-    ToolButton
+    RowLayout
     {
-        id: toolButton
-        property color colorHovered: "#248566"
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        text: "\u2190"
-        font.pixelSize: 0.5 * root.height
-        onClicked:
+        anchors.fill: parent
+        spacing: marginWidth
+        ToolButton
         {
-            closeMessenger()
-        }
-    }
-
-    //Аватар
-    Rectangle
-    {
-        id: rectAvatar
-        anchors.left: toolButton.right
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.margins: marginWidth
-        anchors.leftMargin: 4 * marginWidth
-
-        height: 0.7 * root.height
-        width: height
-        radius: height
-
-        layer.enabled: true
-        layer.effect: OpacityMask
-        {
-            maskSource: Rectangle
+            id: toolButton
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+            text: "\u2190"
+            font.pixelSize: 0.5 * root.height
+            onClicked:
             {
-                height: rectAvatar.height
-                width: rectAvatar.width
-                radius: width / 2
+                closeMessenger()
             }
         }
 
-        //Первая буква в кружочке
+        //Аватар
+        Rectangle
+        {
+            id: rectAvatar
+            //anchors.left: toolButton.right
+            //anchors.verticalCenter: parent.verticalCenter
+            anchors.margins: marginWidth
+            Layout.rightMargin: root.width / 50
+
+            Layout.preferredHeight: 0.7 * root.height
+            Layout.preferredWidth: Layout.preferredHeight
+            radius: Layout.preferredHeight / 2
+
+            layer.enabled: true
+            layer.effect: OpacityMask
+            {
+                maskSource: Rectangle
+                {
+                    height: rectAvatar.height
+                    width: rectAvatar.width
+                    radius: width / 2
+                }
+            }
+
+            //Первая буква в кружочке
+            Label
+            {
+                id: labelLetter
+                anchors.centerIn: parent
+                text: receiverName[0]
+                font.bold: true
+                font.pointSize: letterFontSize
+            }
+        }
+
+        //Имя
         Label
         {
-            id: labelLetter
-            anchors.centerIn: parent
-            text: receiverName[0]
-            font.bold: true
-            font.pointSize: letterFontSize
+            id: labelName
+            Layout.alignment: Qt.AlignCenter
+            Layout.fillWidth: true
+            //anchors.centerIn: parent
+            font.pixelSize: root.height * 0.35
         }
-    }
-
-    //Имя
-    Label
-    {
-        id: labelName
-        anchors.centerIn: parent
-        font.pixelSize: root.height * 0.35
     }
 
 

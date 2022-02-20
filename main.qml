@@ -5,19 +5,32 @@ import QtQuick.Layouts 1.3
 import QtQml 2.3
 import QtQuick.Controls.Universal 2.3
 import QtGraphicalEffects 1.13
+import Qt.labs.settings 1.0
 import myextension 1.0
 
 Window
 {
     id: window
-    width: 640
-    height: 480
+    width: settings.width
+    height: settings.height
     visible: true
     title: qsTr("Messenger")
 
     readonly property int defMargin: 10
     readonly property color panelColor: "#32B88E"
     readonly property color colorText: "#2E2E2E"
+
+    Settings
+    {
+        id: settings
+        property int width: 640
+        property int height: 480
+    }
+    Component.onDestruction:
+    {
+        settings.width = window.width
+        settings.height = window.height
+    }
 
     Connections
     {
