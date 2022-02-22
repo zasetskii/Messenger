@@ -100,7 +100,6 @@ Window
     {
         id: messengerPage
         visible: false
-        listmodel: client.messageModel
         Connections
         {
             target: messengerPage
@@ -115,12 +114,6 @@ Window
             if (visible == false)
             {
                 client.clear()
-                scrollHeight = 0
-            }
-            else
-            {
-                console.log("scroll height:", scrollHeight)
-                //listview.contentY = scrollHeight
             }
         }
 
@@ -128,6 +121,7 @@ Window
         {
             //отправляем сообщение на сервер (и локально сохраняем его в табличную модель)
             client.sendMessage(message)
+            listview.positionViewAtEnd()
         }
     }
 

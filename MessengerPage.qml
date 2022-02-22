@@ -32,8 +32,6 @@ Page
     property alias listmodel: listView.model
     property alias listview: listView
 
-    property int scrollHeight: 0
-
     //The header item is positioned to the top, and resized to the width of the page.
     header: PageHeader
     {
@@ -61,7 +59,6 @@ Page
             var newDate = Qt.formatDate(new Date(), "yyyy-MM-dd") + "-" + newMessage.time
             newMessage.date = newDate
             sendMessage(newMessage)
-            //listView.contentY = listView.contentHeight //contentY - координата верхнего левого угла содержимого в отображении
         }
     }
 
@@ -75,8 +72,7 @@ Page
         anchors.leftMargin: defMargin * 3
         spacing: 3 * defMargin
         ScrollBar.vertical: ScrollBar {}
-        //contentY: contentHeight - height
-        //model: listModel
+        model: client.messageModel
         delegate: MessageItem
         {
             anchors.left: (model.sender === receiver) ? parent.left : undefined
@@ -89,20 +85,16 @@ Page
             text: model.text
             time: model.time
             marginWidth: defMargin
-            Component.onCompleted:
+            ListView.onAdd:
             {
-                scrollHeight += rectHeight + 60
+                Qt.callLater(listView.positionViewAtEnd)
             }
+
             onRemoveMessage:
             {
                 client.sendRemoveMessage(id)
                 client.removeMessageLocally(id)
             }
         }
-        onCountChanged:
-        {
-            contentY = scrollHeight
-        }
-
     }
 }
