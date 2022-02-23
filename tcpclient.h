@@ -8,6 +8,7 @@
 #include <QImage>
 #include <QStringListModel>
 #include "variantmaptablemodel.h"
+#include "commands.h"
 
 class TCPClient : public QObject
 {
@@ -64,6 +65,7 @@ private:
     QImage getFriendAvatar() const;
 
     void sendStringList(const QStringList& string_list) const; //вспомогательный метод, отправляет набор строк на сервер
+    void sendCommand(const ServerCommand& command) const;
     void sendFriendsRequest() const;
     void sendAvatarRequest() const;
     void sendUsersRequest() const;
@@ -84,6 +86,7 @@ private:
     QImage m_friend_avatar;
 
     int m_next_block_size = 0;
-    QString m_command = "NO COMMAND";
+    //QString m_command = "NO COMMAND";
+    ClientCommand m_command = NO_COMMAND_CLIENT;
 };
 #endif // TCPCLIENT_H

@@ -41,20 +41,20 @@ void TCPClient::slotReadServer()
         {
             break;
         }
-        if (m_command == "NO COMMAND")
+        if (m_command == NO_COMMAND_CLIENT)
         {
             in >> m_command;
             m_next_block_size = 0;
             continue;
         }
-        else if (m_command == "MESSAGE")
+        else if (m_command == MESSAGE)
         {
             QVariantMap record;
             in >> record;
             m_message_model->addRow(record);
             emit messageModelChanged();
         }
-        else if (m_command == "USERS")
+        else if (m_command == USERS)
         {
             QStringList users;
             in >> users;
@@ -65,14 +65,14 @@ void TCPClient::slotReadServer()
             emit usersModelChanged();
             emit curUserChanged();
         }
-        else if (m_command == "FRIENDS")
+        else if (m_command == FRIENDS)
         {
             QStringList friends;
             in >> friends;
             m_friends_model->setStringList(friends);
             emit friendsModelChanged();
         }
-        else if (m_command == "AVATAR")
+        else if (m_command == AVATAR)
         {
             in >> m_avatar;
             if (m_avatar.size() == QSize(0, 0))
@@ -80,7 +80,7 @@ void TCPClient::slotReadServer()
             else
                 emit avatarChanged();
         }
-        else if (m_command == "FRIEND AVATAR")
+        else if (m_command == FRIEND_AVATAR)
         {
             in >> m_friend_avatar;
             if (m_friend_avatar.size() == QSize(0, 0))
@@ -88,7 +88,7 @@ void TCPClient::slotReadServer()
             else
                 emit friendAvatarChanged();
         }
-        m_command = "NO COMMAND";
+        m_command = NO_COMMAND_CLIENT;
         m_next_block_size = 0;
     }
 }
@@ -186,9 +186,19 @@ void TCPClient::sendStringList(const QStringList& string_list) const
     }
 }
 
+void TCPClient::sendCommand(const ServerCommand &command) const
+{
+    QByteArray sending_data;
+    QDataStream out(&sending_data, QIODevice::WriteOnly);
+    out << 0 << command;
+    out.device()->seek(0);
+    out << sending_data.size() - sizeof(int);
+    m_tcp_socket->write(sending_data);
+}
+
 void TCPClient::sendMessage(const QVariantMap& message) const
 {
-    sendStringList({QString("WRITE")});
+    sendCommand(MESSAGE_WRITE);
 
     QByteArray block_message;
     QDataStream out_message(&block_message, QIODevice::WriteOnly);
@@ -204,7 +214,8 @@ void TCPClient::sendAvatar(const QString &username, QString image_url)
     qDebug() << m_avatar.load(image_url);
     emit avatarChanged();
 
-    sendStringList({QString("AVATAR UPDATE"), username});
+    sendCommand(AVATAR_UPDATE);
+    sendStringList({username});
     QByteArray block_image;
     QDataStream out_image(&block_image, QIODevice::WriteOnly);
     out_image << 0 << m_avatar;
@@ -215,33 +226,36 @@ void TCPClient::sendAvatar(const QString &username, QString image_url)
 
 void TCPClient::sendMessageRequest(const QString& sender, const QString& receiver) const
 {
-    sendStringList({QString("READ"), sender, receiver});
+    sendCommand(MESSAGES_READ);
+    sendStringList({sender, receiver});
 }
 
 void TCPClient::sendUsersRequest() const
 {
-    sendStringList({QString("USERS GET")});
+    sendCommand(USERS_GET);
 }
 
 void TCPClient::sendFriendsRequest() const
 {
-    sendStringList({QString("FRIENDS GET"), m_cur_user});
+    sendCommand(FRIENDS_GET);
+    sendStringList({m_cur_user});
 }
 
 void TCPClient::sendAvatarRequest() const
 {
-    sendStringList({QString("AVATAR GET"), m_cur_user});
+    sendCommand(AVATAR_GET);
+    sendStringList({m_cur_user});
 }
 
 void TCPClient::sendFriendAvatarRequest(const QString &friend_name) const
 {
-    sendStringList({QString("FRIEND AVATAR GET"), friend_name});
+    sendCommand(FRIEND_AVATAR_GET);
+    sendStringList({friend_name});
 }
 
 void TCPClient::sendRemoveMessage(const int id) const
 {
-    qDebug() << "Remove index:" << id;
-    sendStringList({QString("MESSAGE REMOVE")});
+    sendCommand(MESSAGE_REMOVE);
     QByteArray block_id;
     QDataStream out(&block_id, QIODevice::WriteOnly);
     out << sizeof(id) << id;
@@ -256,12 +270,14 @@ void TCPClient::removeMessageLocally(const int id)
 
 void TCPClient::sendNewUser(const QString &username) const
 {
-    sendStringList({QString("USERS APPEND"), username});
+    sendCommand(USER_APPEND);
+    sendStringList({username});
 }
 
 void TCPClient::sendNewFriend(const QString &username, const QString &new_friend) const
 {
-    sendStringList({QString("FRIENDS APPEND"), username, new_friend});
+    sendCommand(FRIEND_APPEND);
+    sendStringList({username, new_friend});
 }
 
 void TCPClient::setCurUser(const QString &username)
