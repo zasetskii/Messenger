@@ -83,7 +83,6 @@ Window
         id: friendsPage
         visible: true
         username: window.username
-        friendsModel: client.friendsModel
         onOpenMessenger:
         {
             messengerPage.receiver = receiver
@@ -106,6 +105,8 @@ Window
             target: messengerPage
             onOpenFriendsPage:
             {
+                client.clearFriendsModel()
+                client.sendFriendsRequest()
                 friendsPage.visible = true
                 messengerPage.visible = false
             }
@@ -114,7 +115,7 @@ Window
         {
             if (visible == false)
             {
-                client.clear()
+                client.clearMessageModel()
             }
         }
 

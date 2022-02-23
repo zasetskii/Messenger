@@ -38,9 +38,6 @@ Rectangle
         Rectangle
         {
             id: rectAvatar
-            //anchors.left: toolButton.right
-            //anchors.verticalCenter: parent.verticalCenter
-            anchors.margins: marginWidth
             Layout.rightMargin: root.width / 50
 
             Layout.preferredHeight: 0.7 * root.height
@@ -92,6 +89,7 @@ Rectangle
         target: client
         onFriendAvatarChanged:
         {
+            //Проверяем, создан ли уже аватар
             for(var i = 0; i < rectAvatar.children.length; ++i)
             {
                 labelLetter.visible = false
@@ -102,10 +100,12 @@ Rectangle
                     return
                 }
             }
+            //Cоздаём экземпляр компонента avatarImage
             var avatar = avatarImage.createObject(rectAvatar, {objectName: "avatarImg",
                                                                height: rectAvatar.height * 2,
                                                                width: rectAvatar.width * 2,
                                                                "anchors.centerIn": rectAvatar})
+            //Инициализируем присланным изображением
             avatar.image = client.friendAvatar
         }
         onFriendAvatarMissing:

@@ -9,20 +9,25 @@ TCPClient::TCPClient(const QString& connecting_host, int port_num, QObject *pare
     connect(m_tcp_socket, &QTcpSocket::readyRead, this, &TCPClient::slotReadServer);
     connect(m_tcp_socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(slotError(QAbstractSocket::SocketError)));
 
-    m_message_model = new VariantMapTableModel;
+    m_message_model = new VariantMapIdTableModel;
     //Инициализируем табличную модель
-    m_message_model->registerColumn(new SimpleColumn("id"));
-    m_message_model->registerColumn(new SimpleColumn("text"));
-    m_message_model->registerColumn(new SimpleColumn("time"));
-    m_message_model->registerColumn(new SimpleColumn("sender"));
-    m_message_model->registerColumn(new SimpleColumn("receiver"));
-    m_message_model->registerColumn(new SimpleColumn("date"));
+    m_message_model->registerColumn(new Column("id"));
+    m_message_model->registerColumn(new Column("text"));
+    m_message_model->registerColumn(new Column("time"));
+    m_message_model->registerColumn(new Column("sender"));
+    m_message_model->registerColumn(new Column("receiver"));
+    m_message_model->registerColumn(new Column("date"));
+
+    m_friends_model = new FriendsTableModel;
+    //Инициализируем модель друзей
+    m_friends_model->registerColumn(new Column("text"));
+    m_friends_model->registerColumn(new Column("time"));
+    m_friends_model->registerColumn(new Column("sender"));
+    m_friends_model->registerColumn(new Column("friend_name"));
 
     //Инициализируем модель пользователей
     m_users_model = new QStringListModel;
 
-    //Инициализируем модель друзей
-    m_friends_model = new QStringListModel;
 }
 
 //Чтение данных с сервера (вызывается каждый раз, когда новые данные доступны для чтения)
@@ -65,16 +70,17 @@ void TCPClient::slotReadServer()
             emit usersModelChanged();
             emit curUserChanged();
         }
-        else if (m_command == FRIENDS)
+        else if (m_command == FRIEND)
         {
-            QStringList friends;
-            in >> friends;
-            m_friends_model->setStringList(friends);
+            QVariantMap record;
+            in >> record;
+            m_friends_model->addRow(record);
             emit friendsModelChanged();
         }
         else if (m_command == AVATAR)
         {
             in >> m_avatar;
+            QVariant(QImage());
             if (m_avatar.size() == QSize(0, 0))
                 emit avatarMissing();
             else
@@ -114,15 +120,20 @@ void TCPClient::addMessageLocally(const QVariantMap &message)
     emit messageModelChanged();
 }
 
-void TCPClient::clear()
+void TCPClient::clearMessageModel()
 {
     m_message_model->clearHash();
+}
+
+void TCPClient::clearFriendsModel()
+{
+    m_friends_model->clear();
 }
 
 void TCPClient::onUserChosen(const QString &username)
 {
     m_cur_user = username;
-    qDebug() << "Current user: " << username;
+    m_friends_model->clear();
     sendFriendsRequest();
     sendAvatarRequest();
     emit curUserChanged();
@@ -157,20 +168,17 @@ void TCPClient::onNewFriend(const QString &username, const QString &new_friend)
         return;
     }
     //Проверяем, есть ли уже в друзьях
-    if (m_friends_model->stringList().contains(new_friend))
+    if (m_friends_model->containsFriend("friend_name", new_friend))
     {
         emit alreadyFriend();
         qDebug() << "User already a friend";
         return;
     }
-    //Добавляем друга локально
-    m_friends_model->insertRow(m_friends_model->rowCount());
-    QModelIndex insert_index = m_friends_model->index(m_friends_model->rowCount() - 1, 0);
-    m_friends_model->setData(insert_index, new_friend);
+
     //Отправляем информацию на сервер
     sendNewFriend(username, new_friend);
-    qDebug() << "Friend " << new_friend << " added!";
-    emit friendsModelChanged();
+    //Запрашиваем новые данные друзей
+    sendFriendsRequest();
 }
 
 void TCPClient::sendStringList(const QStringList& string_list) const
@@ -287,17 +295,17 @@ void TCPClient::setCurUser(const QString &username)
 }
 
 
-VariantMapTableModel* TCPClient::getMessageModel() const
+VariantMapIdTableModel* TCPClient::getMessageModel() const
 {
     return m_message_model;
 }
 
-QStringListModel *TCPClient::getUsersModel() const
+QStringListModel* TCPClient::getUsersModel() const
 {
     return m_users_model;
 }
 
-QStringListModel *TCPClient::getFriendsModel() const
+FriendsTableModel* TCPClient::getFriendsModel() const
 {
     return m_friends_model;
 }

@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
 import QtQml 2.3
+import QtGraphicalEffects 1.13
+import myextension 1.0
 
 //Список друзей
 Page
@@ -9,7 +11,6 @@ Page
     id: page
     anchors.fill: parent
     property string username
-    property alias friendsModel: friendsList.model
     readonly property color panelColor: "#32B88E"
     readonly property color backgroundColor: "white"
 
@@ -51,19 +52,78 @@ Page
             id: friendsList
             Layout.fillWidth: true
             Layout.fillHeight: true
+            spacing: 10
+            model: client.friendsModel
             delegate: Rectangle
             {
                 id: rectDelegate
                 anchors.margins: defMargin
                 width: parent.width
-                height: 30
+                height: 60
                 color: backgroundColor
-                Text
+                RowLayout
                 {
-                    id: friend
-                    anchors.centerIn: parent
-                    font.pointSize: 14
-                    text: model.display
+                    anchors.fill: parent
+                    //Аватар
+                    Rectangle
+                    {
+                        id: rectAvatar
+                        Layout.preferredHeight: 0.7 * parent.height
+                        Layout.preferredWidth: Layout.preferredHeight
+                        Layout.rightMargin: 10
+                        radius: Layout.preferredHeight / 2
+                        color: "orange"
+
+                        layer.enabled: true
+                        layer.effect: OpacityMask
+                        {
+                            maskSource: Rectangle
+                            {
+                                height: rectAvatar.height
+                                width: rectAvatar.width
+                                radius: width / 2
+                            }
+                        }
+                        //Первая буква в кружочке
+                        Label
+                        {
+                            id: labelLetter
+                            anchors.centerIn: parent
+                            text: model.friend_name[0]
+                            color: "white"
+                            font.bold: true
+                            font.pointSize: 18
+                        }
+                    }
+
+                    ColumnLayout
+                    {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        spacing: 5
+                        Label
+                        {
+                            id: friend
+                            font.pointSize: 14
+                            font.bold: true
+                            text: model.friend_name
+                        }
+                        Label
+                        {
+                            Layout.fillWidth: true
+                            font.pointSize: 12
+                            text: ((page.username === model.sender) ? "<b>Вы</b>: " : "") + model.text
+                            elide: Text.ElideRight
+                        }
+                    }
+                    Label
+                    {
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: 40
+                        Layout.topMargin: 10
+                        font.pointSize: 9
+                        text: model.time
+                    }
                 }
                 MouseArea
                 {
@@ -198,7 +258,7 @@ Page
     {
         id: dialogOwnName
         anchors.centerIn: parent
-        title: "Нельзя добавлять в друзья себя"
+        title: "Нельзя добавить в друзья себя"
         modal: true
         width: (parent.width > 300) ? 300 : parent.width
         height: (parent.height > 150) ? 150 : parent.height
