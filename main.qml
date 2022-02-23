@@ -19,7 +19,7 @@ Window
     readonly property int defMargin: 10
     readonly property color panelColor: "#32B88E"
     readonly property color colorText: "#2E2E2E"
-
+    property string username: "Unknown User"
     Settings
     {
         id: settings
@@ -68,6 +68,7 @@ Window
             }
             labelLetter.visible = true
         }
+        onCurUserChanged: username = client.curUser
     }
 
     Component
@@ -81,12 +82,12 @@ Window
     {
         id: friendsPage
         visible: true
-        username: client.curUser
+        username: window.username
         friendsModel: client.friendsModel
         onOpenMessenger:
         {
             messengerPage.receiver = receiver
-            messengerPage.username = friendsPage.username
+            messengerPage.username = window.username
             //Здесь запрашиваем данные у сервера
             client.sendMessageRequest(messengerPage.username, messengerPage.receiver)
             client.sendFriendAvatarRequest(messengerPage.receiver)
@@ -172,7 +173,7 @@ Window
                         {
                             id: labelLetter
                             anchors.centerIn: parent
-                            text: client.curUser[0]
+                            text: username[0]
                             font.bold: true
                             color: "cyan"
                             font.pointSize: 18
@@ -181,12 +182,11 @@ Window
                     Label
                     {
                         Layout.fillWidth: true
-                        //horizontalAlignment: Text.AlignHCenter
                         font.pointSize: 14
                         font.bold: true
                         elide: Qt.ElideRight
                         color: "white"
-                        text: friendsPage.username
+                        text: username
                     }
                 }
             }
@@ -203,7 +203,7 @@ Window
 
                     horizontalAlignment: Text.AlignHCenter
                     font.pointSize: 12
-                    font.bold: true
+                    //font.bold: true
                     elide: Qt.ElideRight
                     color: colorText
                     text: "Сменить пользователя:"
@@ -215,8 +215,6 @@ Window
                 id: listUsers
                 Layout.fillWidth: true
                 Layout.preferredHeight: contentHeight
-                //anchors.fill: parent
-                //Layout.alignment: Qt.AlignCenter
                 spacing: defMargin
                 model: client.usersModel
                 delegate: ItemDelegate
@@ -246,6 +244,13 @@ Window
 
             Rectangle
             {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 0.5
+                color: "#647687"
+            }
+
+            Rectangle
+            {
                 id: btnNewUser
                 Layout.fillWidth: true
                 Layout.preferredHeight: 40
@@ -262,11 +267,10 @@ Window
                         fillMode: Image.PreserveAspectFit
                         anchors.verticalCenter: parent.verticalCenter
                     }
-                    Text
+                    Label
                     {
                         width: 0.8 * parent.width
                         text: "Добавить"
-                        color: colorText
                         elide: Text.ElideRight
                         font.pointSize: 12
                         anchors.verticalCenter: parent.verticalCenter
