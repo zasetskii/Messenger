@@ -158,7 +158,7 @@ Window
                         Layout.preferredHeight: 0.8 * parent.height
                         Layout.preferredWidth: Layout.preferredHeight
                         radius: Layout.preferredHeight / 2
-                        color: "white"
+                        color: "orange"
                         layer.enabled: true
                         layer.effect: OpacityMask
                         {
@@ -176,7 +176,7 @@ Window
                             anchors.centerIn: parent
                             text: username[0]
                             font.bold: true
-                            color: "cyan"
+                            color: "white"
                             font.pointSize: 18
                         }
                     }

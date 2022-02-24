@@ -38,8 +38,8 @@ Page
         id: pageHeader
         receiverName: "Receiver Name"
         color: panelColor
-        colorAvatarBg: "white"
-        colorAvatarLetter: "cyan"
+        colorAvatarBg: "orange"
+        colorAvatarLetter: "white"
         colorName: "white"
     }
 
