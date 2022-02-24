@@ -26,18 +26,13 @@ public:
     ~VariantMapTableModel();
 
     void registerColumn(Column* column);
-//    void addRow(QVariantMap row_data);
-//    void deleteRow(const int id);
-//    void clearHash();
 
     //Convenience methods
     int colByName(QString name) const;
     QString nameByCol(int  col) const;
-    //int rowById(const int id) const;
 
     //QAbstractItemModel interface
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
-    //virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
     virtual QHash<int, QByteArray> roleNames() const;
 
 protected:
@@ -68,7 +63,6 @@ private:
     //Хранение данных
     QVector<int> m_id_by_row; //индекс (номер строки) по id (идентификатору) из БД
     QHash<int, QVariantMap> m_data_hash; //таблица (номер строки - ассоциативный массив "название столбца - значение")
-    //QList<Column*> m_columns; //для удобства обращения к колонкам не по индексу, а по имени колонки
 };
 
 
@@ -90,7 +84,6 @@ public:
 private:
     //Хранение данных
     QVector<QVariantMap> m_data;
-    //QList<Column*> m_columns; //для удобства обращения к колонкам не по индексу, а по имени колонки
 };
 
 #endif // VARIANTMAPTABLEMODEL_H

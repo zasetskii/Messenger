@@ -94,6 +94,30 @@ Page
                             font.bold: true
                             font.pointSize: 18
                         }
+//                        ImageItem
+//                        {
+//                            height: rectAvatar.height * 2
+//                            width: rectAvatar.width * 2
+//                            anchors.centerIn: parent
+//                            image: model.avatar
+//                        }
+                        Component
+                        {
+                            id: avatarImage
+                            ImageItem {}
+                        }
+                        Component.onCompleted:
+                        {
+                            if (model.hasAvatar === false)
+                            {
+                                console.log("Avatar is empty:", model.friend_name)
+                                return;
+                            }
+                            var avatar = avatarImage.createObject(rectAvatar, {height: rectAvatar.height * 2,
+                                                                               width: rectAvatar.width * 2,
+                                                                               "anchors.centerIn": rectAvatar})
+                            avatar.image = model.avatar
+                        }
                     }
 
                     ColumnLayout

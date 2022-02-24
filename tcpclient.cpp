@@ -24,6 +24,8 @@ TCPClient::TCPClient(const QString& connecting_host, int port_num, QObject *pare
     m_friends_model->registerColumn(new Column("time"));
     m_friends_model->registerColumn(new Column("sender"));
     m_friends_model->registerColumn(new Column("friend_name"));
+    m_friends_model->registerColumn(new Column("avatar"));
+    m_friends_model->registerColumn(new Column("hasAvatar"));
 
     //Инициализируем модель пользователей
     m_users_model = new QStringListModel;
@@ -80,7 +82,6 @@ void TCPClient::slotReadServer()
         else if (m_command == AVATAR)
         {
             in >> m_avatar;
-            QVariant(QImage());
             if (m_avatar.size() == QSize(0, 0))
                 emit avatarMissing();
             else
