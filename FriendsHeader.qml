@@ -82,19 +82,29 @@ Rectangle
         id: aboutPopup
         parent: Overlay.overlay
         anchors.centerIn: parent
-        width: 0.8 * root.width
+        width: (root.width < 800) ? 0.8 * root.width : 640
         modal: true
-        contentItem:
-        Label
+        ColumnLayout
         {
             anchors.fill: parent
-            anchors.margins: 15
-            wrapMode: Text.WordWrap
-            textFormat: Text.StyledText
-            text: "Данное приложение - подобие клиента мессенджера, работающее в связке с приложением-сервером.
+            Label
+            {
+                text: "О приложении"
+                font.pointSize: 16
+            }
+
+            Label
+            {
+                //anchors.fill: parent
+                //anchors.margins: 15
+                Layout.maximumWidth: parent.width
+                wrapMode: Text.WordWrap
+                textFormat: Text.StyledText
+                text: "Данное приложение - подобие клиента мессенджера, работающее в связке с приложением-сервером.
 Подключение осуществляется по локальной сети, все данные подгружаются с сервера.<br>Выбор пользователя или создание
 нового осуществляется в левом меню-шторке.<br>Кнопка на экране с друзьями позволяет добавить пользователя в друзья."
-            font.pointSize: 10
+                font.pointSize: 12
+            }
         }
     }
 
