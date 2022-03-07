@@ -178,6 +178,8 @@ void TCPClient::onNewFriend(const QString &username, const QString &new_friend)
 
     //Отправляем информацию на сервер
     sendNewFriend(username, new_friend);
+    //Сбрасываем текущий список друзей
+    m_friends_model->clear();
     //Запрашиваем новые данные друзей
     sendFriendsRequest();
 }
