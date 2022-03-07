@@ -173,7 +173,6 @@ Page
         height: 60
         anchors.margins: 20
         font.pointSize: 30
-        font.family: "Times"
 
         text:  "<font color='black'>\u002b</font>"
 

@@ -68,7 +68,7 @@ Rectangle
         title: "Выберите изображение"
         selectMultiple: false
         selectFolder: false
-        nameFilters: ["Jpg files (*.jpg *.jpeg)", "Png files (*.png)"]
+        nameFilters: ["Jpg files (*.jpg *.jpeg)"]
         folder: shortcuts.pictures
         onAccepted:
         {

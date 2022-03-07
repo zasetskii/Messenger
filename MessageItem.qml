@@ -16,7 +16,8 @@ Label
     property int marginWidth
     property int maxWidth
 
-    width: (text.length <= 50) ? (textMetrics.boundingRect.width + 40) : maxWidth
+    //width: (text.length <= 100) ? (textMetrics.boundingRect.width + 40) : maxWidth
+    width: (text.length <= Math.floor(window.width / 10)) ? (textMetrics.boundingRect.width + 30) : maxWidth
 
     font.pointSize: 11
 
@@ -25,7 +26,7 @@ Label
     topInset: -10
     bottomInset: -10
 
-    wrapMode: Text.WordWrap
+    wrapMode: Text.Wrap
     background: Rectangle
     {
         id: bgRect
