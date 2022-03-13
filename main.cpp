@@ -30,12 +30,9 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
 
     //TCPClient client("192.168.0.3", 2323);
-    TCPClient client("192.168.0.5", 2323);
-    //TCPClient client("localhost", 2323);
+    //TCPClient client("192.168.0.5", 2323);
+    TCPClient client("localhost", 2323);
     engine.rootContext()->setContextProperty("client", &client);
-
-    QStringList users;
-    users << "Vlad" << "Sergey" << "Alex";
 
     engine.load(url);
 
