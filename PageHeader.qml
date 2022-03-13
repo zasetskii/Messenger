@@ -26,7 +26,7 @@ Rectangle
         {
             id: toolButton
             Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-            text: "\u2190"
+            text: "<font color='white'>\u2190</font>"
             font.pixelSize: 0.5 * root.height
             onClicked:
             {

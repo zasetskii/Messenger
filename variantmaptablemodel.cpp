@@ -15,21 +15,6 @@ void VariantMapTableModel::registerColumn(Column *column)
     m_columns.append(column);
 }
 
-int VariantMapTableModel::colByName(QString name) const
-{
-    for(int col = 0; col < m_columns.count(); ++col)
-    {
-        if (nameByCol(col) == name)
-            return col;
-    }
-    return -1;
-}
-
-QString VariantMapTableModel::nameByCol(int col) const
-{
-    return m_columns.at(col)->name();
-}
-
 int VariantMapTableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)

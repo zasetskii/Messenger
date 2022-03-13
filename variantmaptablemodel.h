@@ -27,10 +27,6 @@ public:
 
     void registerColumn(Column* column);
 
-    //Convenience methods
-    int colByName(QString name) const;
-    QString nameByCol(int  col) const;
-
     //QAbstractItemModel interface
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
     virtual QHash<int, QByteArray> roleNames() const;
