@@ -53,3 +53,6 @@
 [`ImageItem`](https://github.com/zasetskii/Messenger/blob/main/imageitem.h) – класс, используемый для отрисовки в QML присланных сервером объектов `QImage`<br>
 [`VariantMapTableModel` и производные классы](https://github.com/zasetskii/Messenger/blob/main/variantmaptablemodel.h) – классы моделей данных. Работают с данными типа `QVariantMap`. Используются в качестве моделей для представлений в QML.<br>
 [`TCPClient`](https://github.com/zasetskii/Messenger/blob/main/tcpclient.h) – класс клиента. Принимает и отправляет команды серверу, взаимодействует с QML-стороной приложения: предоставляет данные, обрабатывает сигналы.<br>
+
+## Скачать
+[Клиент мессенджера](https://disk.yandex.ru/d/2gBawk91K8sngw)
