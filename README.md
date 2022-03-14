@@ -20,33 +20,33 @@
 
 ### Экран со списком друзей
 Файлы: [FriendsPage.qml](https://github.com/zasetskii/Messenger/blob/main/FriendsPage.qml), [PageHeader.qml](https://github.com/zasetskii/Messenger/blob/main/PageHeader.qml) – нижняя часть страницы
-
-<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/1.png">
+<p align="center">
+<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/1.png"> </p>
 
 ### Экран с диалогом
 Файлы: [MessengerPage.qml](https://github.com/zasetskii/Messenger/blob/main/MessengerPage.qml), [PageHeader.qml](https://github.com/zasetskii/Messenger/blob/main/PageHeader.qml), [MessageEditor.qml](https://github.com/zasetskii/Messenger/blob/main/MessageEditor.qml) – нижняя часть страницы, [MessageItem.qml](https://github.com/zasetskii/Messenger/blob/main/MessageItem.qml) – делегат для задания вида одного сообщения
-
-<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/2.png">
+<p align="center">
+<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/2.png"> </p>
 
 #### В меню-шторке можно сменить пользователя или создать нового.
 <b>Компоненты</b>: Drawer
-
-<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/3.png">
+<p align="center">
+<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/3.png"> </p>
 
 #### Нажатие на кнопку «+» вызывает диалог добавления в друзья пользователя.
 <b>Компоненты</b>: Dialog и ComboBox
-
-<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/4.png">
+<p align="center">
+<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/4.png"> </p>
 
 #### Аватар можно загрузить из меню настроек.
 <b>Компоненты</b>: ToolButton, Menu, MenuItem, FileDialog
-
-<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/5.png">
+<p align="center">
+<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/5.png"> </p>
 
 #### В окне диалога есть возможность скопировать или удалить сообщение.
 <b>Компоненты</b>: MouseArea, Menu, MenuItem
-
-<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/6.png">
+<p align="center">
+<img src="https://github.com/zasetskii/Messenger/blob/main/readme_images/6.png"> </p>
 
 ## Описание файлов/классов
 [`commands.h`](https://github.com/zasetskii/Messenger/blob/main/commands.h) – содержит `enum` команд, используемых для взаимодействия приложений клиента и сервера<br>
