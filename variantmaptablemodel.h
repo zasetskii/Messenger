@@ -32,7 +32,6 @@ public:
     virtual QHash<int, QByteArray> roleNames() const;
 
 protected:
-    //Хранение данных
     QList<Column*> m_columns; //для удобства обращения к колонкам не по индексу, а по имени колонки
 
 };
@@ -51,7 +50,7 @@ public:
 
     int rowById(const int id) const;
 
-    //VariantMapTableModel interface
+    //QAbstractItemModel interface
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
@@ -73,7 +72,7 @@ public:
     void clear();
     bool containsFriend(const QString& key_name, const QString& friend_name) const;
 
-    //VariantMapTableModel interface
+    //QAbstractItemModel interface
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
 

@@ -27,7 +27,7 @@ public:
 
 signals:
     void messageModelChanged();
-    void usersModelChanged(); //при добавлении нового пользователя
+    void usersModelChanged();
     void friendsModelChanged();
     void curUserChanged();
     void avatarChanged();
@@ -78,7 +78,7 @@ private:
 
 private:
     QTcpSocket* m_tcp_socket;
-    VariantMapIdTableModel* m_message_model; //модель сообщений
+    VariantMapIdTableModel* m_message_model;
     FriendsTableModel* m_friends_model;
     QStringListModel* m_users_model;
 

@@ -95,8 +95,6 @@ Rectangle
 
             Label
             {
-                //anchors.fill: parent
-                //anchors.margins: 15
                 Layout.maximumWidth: parent.width
                 wrapMode: Text.WordWrap
                 textFormat: Text.StyledText

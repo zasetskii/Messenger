@@ -32,7 +32,6 @@ Page
     property alias listmodel: listView.model
     property alias listview: listView
 
-    //The header item is positioned to the top, and resized to the width of the page.
     header: PageHeader
     {
         id: pageHeader
