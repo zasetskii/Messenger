@@ -55,4 +55,8 @@
 [`TCPClient`](https://github.com/zasetskii/Messenger/blob/main/tcpclient.h) – класс клиента. Принимает и отправляет команды серверу, взаимодействует с QML-стороной приложения: предоставляет данные, обрабатывает сигналы.<br>
 
 ## Скачать
-[Клиент мессенджера](https://disk.yandex.ru/d/2gBawk91K8sngw)
+[Приложение-клиент](https://disk.yandex.ru/d/_OELQFTO6egETg)<br>
+[Приложение-сервер](https://disk.yandex.ru/d/AUzihxSNXG-FvQ)<br>
+1. Распаковать<br>
+2. Запустить сервер `TCP_SQL_Server.exe`<br>
+3. Запустить клиент `messenger_client.exe`
