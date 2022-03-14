@@ -194,8 +194,8 @@ Page
         id: dialogAddFriend
         anchors.centerIn: parent
         title: "Добавить в друзья"
-        width: (parent.width > 300) ? 300 : parent.width
-        height: (parent.height > 200) ? 200 : parent.height
+        width: Math.min(parent.width, 300)
+        height: Math.min(parent.height, 200)
         standardButtons: Dialog.Ok | Dialog.Cancel
         modal: true
         ComboBox
@@ -225,8 +225,8 @@ Page
         anchors.centerIn: parent
         title: "Пользователь не существует"
         modal: true
-        width: (parent.width > 200) ? 200 : parent.width
-        height: (parent.height > 150) ? 150 : parent.height
+        width: Math.min(parent.width, 400)
+        height: Math.min(parent.height, 150)
         Label
         {
             anchors.centerIn: parent
@@ -250,8 +250,8 @@ Page
         anchors.centerIn: parent
         title: "Пользователь уже у вас в друзьях"
         modal: true
-        width: (parent.width > 300) ? 300 : parent.width
-        height: (parent.height > 150) ? 150 : parent.height
+        width: Math.min(parent.width, 400)
+        height: Math.min(parent.height, 150)
         Label
         {
             anchors.centerIn: parent
@@ -275,8 +275,8 @@ Page
         anchors.centerIn: parent
         title: "Нельзя добавить в друзья себя"
         modal: true
-        width: (parent.width > 300) ? 300 : parent.width
-        height: (parent.height > 150) ? 150 : parent.height
+        width: Math.min(parent.width, 400)
+        height: Math.min(parent.height, 150)
         Label
         {
             anchors.centerIn: parent
